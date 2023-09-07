@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Dashboard')}">
+</head>
+
+<body>
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Widgets</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align: justify; text-justify: inter-word; font-size: 0.9em">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet, ante
+                                id vulputate finibus, neque odio tristique lorem, id mattis nunc nibh a nibh.
+                                Quisque porta in mauris in malesuada. Aenean a eleifend sem, ac eleifend ante.
+                                Phasellus sit amet pretium felis, a congue odio. Donec eget suscipit ipsum, a
+                                aliquet ex. Aliquam id ex fringilla, vestibulum quam sed, consectetur purus.
+                                Donec et erat ligula. Phasellus tempus lobortis ex, sed porta nisi pellentesque
+                                eget. Nam ac nibh semper, ullamcorper nisi in, consectetur orci. Fusce scelerisque
+                                convallis libero in molestie.
+                            </p>
+                            <p style="text-align: justify; text-justify: inter-word; font-size: 0.9em">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet, ante
+                                id vulputate finibus, neque odio tristique lorem, id mattis nunc nibh a nibh.
+                                Quisque porta in mauris in malesuada. Aenean a eleifend sem, ac eleifend ante.
+                                Phasellus sit amet pretium felis, a congue odio. Donec eget suscipit ipsum, a
+                                aliquet ex. Aliquam id ex fringilla, vestibulum quam sed, consectetur purus.
+                                Donec et erat ligula. Phasellus tempus lobortis ex, sed porta nisi pellentesque
+                                eget. Nam ac nibh semper, ullamcorper nisi in, consectetur orci. Fusce scelerisque
+                                convallis libero in molestie.
+                            </p>
+                            <p style="text-align: justify; text-justify: inter-word; font-size: 0.9em">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet, ante
+                                id vulputate finibus, neque odio tristique lorem, id mattis nunc nibh a nibh.
+                                Quisque porta in mauris in malesuada. Aenean a eleifend sem, ac eleifend ante.
+                                Phasellus sit amet pretium felis, a congue odio. Donec eget suscipit ipsum, a
+                                aliquet ex. Aliquam id ex fringilla, vestibulum quam sed, consectetur purus.
+                                Donec et erat ligula. Phasellus tempus lobortis ex, sed porta nisi pellentesque
+                                eget. Nam ac nibh semper, ullamcorper nisi in, consectetur orci. Fusce scelerisque
+                                convallis libero in molestie.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer></footer>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Investment Portfolio Rebalancing Tool')}">
+</head>
+
+<body>
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('home')}"></nav>
+</header>
+
+<div id="main" class="container-fluid" style="margin-top: 200px; width: 400px">
+    <div class="row justify-content-center">
+            <img class="img-responsive" src="../static/resources/images/title.png" alt="project" th:src="@{/resources/images/title.png}"/>
+    </div>
+</div>
+
+<footer></footer>
+</body>
+
+</html>

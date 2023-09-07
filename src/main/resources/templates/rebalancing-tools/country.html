@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Rebalancing Result - Country')}">
+</head>
+
+<body>
+<!--/*@thymesVar id="investment_account" type="com.example.investmentportfoliorebalancingtool.domain.InvestmentAccount"*/-->
+<!--/*@thymesVar id="rebalancing_template" type="com.example.investmentportfoliorebalancingtool.domain.RebalanceConfigTemplate"*/-->
+<!--/*@thymesVar id="account_assets_country_allocation_map" type="java.util.Map"*/-->
+<!--/*@thymesVar id="template_country_allocation_map" type="java.util.Map"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Tabular Summarization</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Investment Account: </th>
+                                <th colspan="4" th:text="${investment_account.accountNumber} +
+                                ' ($' + ${investment_account.accountValue} + ')'"
+                                    style="font-style: italic;">>
+                                    AC123456 ($0.00)
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Rebalancing Template:</th>
+                                <th colspan="4" th:text="${rebalancing_template.name}"
+                                    style="font-weight: normal;font-style: italic;">
+                                    Default Template
+                                </th>
+                            </tr>
+                            <tr style="height: 75px; vertical-align: bottom;">
+                                <th>Country</th>
+                                <th>Account Allocation (%)</th>
+                                <th>Template Allocation (%)</th>
+                                <th>Difference (%)</th>
+                                <th>Summary</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>Canada</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>Over weight By 0% ($0)</td>
+                            </tr>
+                            <tr th:each="country : ${T(com.example.investmentportfoliorebalancingtool.domain.CountryCodeAlpha2).values()}"
+                                th:with="difference = ${account_assets_country_allocation_map.get(country) -
+                                template_country_allocation_map.get(country)}" th:if="${country.label} != 'Unknown'">
+
+                                <td th:text="${country.label}">Canada</td>
+                                <td th:text="${account_assets_country_allocation_map.get(country)}">0</td>
+                                <td th:text="${#numbers.formatDecimal(template_country_allocation_map.get(country),1 ,2)}">0</td>
+                                <td th:text="${difference}">0</td>
+                                <td th:if="${difference} > 0"
+                                    th:text="'Over weight by  ' + ${difference} + '% ($' +
+                                     ${#numbers.formatDecimal((difference * investment_account.accountValue)/100, 1, 2)} + ')'"
+                                    style="font-style: italic">
+                                    Over weight by 0% (0)
+                                </td>
+
+                                <td th:if="${difference} == 0"
+                                    th:text="'Equal weight'"
+                                    style="font-style: italic">
+                                    Equal weight
+                                </td>
+
+                                <td th:if="${difference} < 0"
+                                    th:text="'Under weight by ' + ${difference} + '% ($' +
+                                     ${#numbers.formatDecimal((difference * investment_account.accountValue)/100, 1, 2)} + ')'"
+                                    style="font-style: italic">
+                                    Under weight by 0% (0)
+                                </td>
+                            </tr>
+
+                            <tr th:with="unknown = ${T(com.example.investmentportfoliorebalancingtool.domain.CountryCodeAlpha2).UNKNOWN},
+                                difference = ${#numbers.formatDecimal(
+                                account_assets_country_allocation_map.get(unknown) -
+                                template_country_allocation_map.get(unknown), 1, 2)}"
+                                style="font-weight: bold; font-style: italic; height: 50px; vertical-align: bottom;">
+                                <td th:text="Unknown">Unknown</td>
+                                <td th:text="${account_assets_country_allocation_map.get(unknown)}">0</td>
+                                <td th:text="${#numbers.formatDecimal(template_country_allocation_map.get(unknown),1 ,2)}">0</td>
+                                <td th:text="${difference}">0</td>
+                                <td th:text="'Not Applicable'">
+                                    Not Applicable
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Graphical Summarization</h6>
+                </div>
+                <div class="card-body">
+                    Line Graph (y = % allocation; x = Country) comparison between Selected Investment Account
+                    and Rebalancing (Country) Template
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

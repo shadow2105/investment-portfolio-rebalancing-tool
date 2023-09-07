@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Equity Sector Template: ' + ${rebalancing_template.name})}">
+</head>
+
+<body>
+<!--/*@thymesVar id="rebalancing_template type="com.example.investmentportfoliorebalancingtool.domain.RebalanceConfigTemplateSector"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid" style="margin-top: 70px">
+    <div class="row">
+        <div class="col min-vh-100 p-4">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Template Details - Equity Sector</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td colspan="2" th:text="'Template: ' + ${rebalancing_template.name}"
+                                    style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 1%;">
+                                    Default Template
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Equity Sector</th>
+                                <th>Percent Allocation (%)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>Energy</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentEnergy, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Materials</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentMaterials, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Industrials</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentIndustrials, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Utilities</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentUtilities,1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Healthcare</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentHealthcare, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Financials</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentFinancials, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Consumer Discretionary</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentConsumerDiscretionary, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Consumer Staples</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentConsumerStaples, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Information Technology</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentInformationTechnology, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Communication Services</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentCommunicationServices, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>Real Estate</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentRealEstate, 1, 2)}">0</td>
+                            </tr>
+                            <tr style="font-weight: bold; font-style: italic; height: 50px; vertical-align: bottom;">
+                                <td>Unknown</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentUnknown, 1, 2)}">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

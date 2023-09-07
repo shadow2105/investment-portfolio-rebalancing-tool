@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Navbar Layout</title>
+</head>
+
+<!--/*@thymesVar id="asset" type="com.example.investmentportfoliorebalancingtool.domain.User"*/-->
+<body>
+
+<nav th:fragment="navLayout (menu)" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img src="../static/resources/images/logo.png" alt="logo" width="150" height="50" th:src="@{/resources/images/logo.png}">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:remove="all">
+
+                <li th:if="${menu != 'learn'}" th:fragment="navItem (link, active, title, glyph, text)" th:class="nav-item">
+                    <a th:class="${active==menu ? 'nav-link active' : 'nav-link'}" th:href="@{__${link}__}" th:title="${title}">
+                        <span th:class="'fa fa-'+${glyph}" class="fa fa-home"></span>
+                        <span th:text="${text}">Template</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li th:replace="~{::navItem ('/','home','home page','home','Home')}">
+                    <span class="fa fa-home" aria-hidden="true"></span>
+                    <span>Home</span>
+                </li>
+
+                <li th:replace="~{::navItem ('/about','about','about page','info-circle','About')}">
+                    <span class="fa fa-info-circle" aria-hidden="true"></span>
+                    <span>About</span>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fa fa-book"></span>
+                        <span>Learn</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" target="_blank"
+                               href="https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4466/tax-free-savings-account-tfsa-guide-individuals.html">
+                            Tax Free Savings Account (TFSA)
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" target="_blank"
+                               href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/rrsps-related-plans/registered-retirement-savings-plan-rrsp.html">
+                            Registered Retirement Savings Plan (RRSP)
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" target="_blank"
+                               href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html">
+                            First Home Savings Account (FHSA)
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li sec:authorize="isAuthenticated()" th:replace="~{::navItem ('/dashboard','dashboard','user dashboard','pie-chart','Dashboard')}">
+                    <span class="fa fa-pie-chart" aria-hidden="true"></span>
+                    <span>Dashboard</span>
+                </li>
+
+                <li sec:authorize="isAuthenticated() && hasAuthority('admin')" th:replace="~{::navItem ('/admin-dashboard','admin-dashboard','admin dashboard','square','Admin')}">
+                    <span class="fa fa-square" aria-hidden="true"></span>
+                    <span>Admin</span>
+                </li>
+
+            </ul>
+
+            <ul th:if="${menu == 'dashboard'}" class="navbar-nav d-flex ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fa fa-gear"></span>
+                        <span></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-md-end">
+                        <li><a class="dropdown-item"
+                               href="#">
+                            Setting 1
+                        </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item"
+                               href="#">
+                            Setting 2
+                        </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item"
+                               href="#">
+                            Setting 3
+                        </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fa fa-sun-o"></span>
+                        <span></span>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fa fa-user"></span>
+                        <span></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-md-end">
+                        <li>
+                            <h6 class="dropdown-header"
+                                  th:text="${user.givenName} + ' ' + ${user.familyName}"
+                                  style="font-weight: bold; color: #000000; margin-bottom: 0; padding-bottom: 0">
+                                Test User
+                            </h6>
+                        </li>
+                        <li>
+                            <span class="dropdown-item" th:text="${user.userName}"
+                            style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 10%;">
+                                test@xyz.com
+                            </span>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="#" th:href="@{/personal-info}">
+                            <span style="color: cornflowerblue; text-decoration: underline">Edit Personal Info</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="#" th:href="@{'/logout'}">
+                            <span style="color: cornflowerblue; text-decoration: underline">Log out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div th:if="${menu != 'dashboard'}" class="d-flex ms-auto order-5">
+                <a sec:authorize="!isAuthenticated()" class="btn btn-secondary" href="#" th:href="@{'/oauth2/authorization/okta'}" role="button">Log in</a>
+
+                <a sec:authorize="isAuthenticated()" class="btn btn-secondary" href="#" th:href="@{'/logout'}" role="button">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+
+</html>

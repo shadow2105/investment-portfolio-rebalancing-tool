@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Layout</title>
+</head>
+<body>
+<div class="sidebar" th:fragment="sidebar">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSupportedContent" data-bs-keyboard="false"
+         data-bs-backdrop="true" aria-labelledby="offcanvasLabel" style="width: 300px;">
+        <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvasLabel">USER</h4>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="nav flex-column align-items-center">
+                <img src="../static/resources/images/placeholder.png" th:src="@{/resources/images/placeholder.png}" alt="user" width="100" height="100" class="rounded-circle">
+
+                <h5 class="text-nowrap" th:text="${user.givenName} + ' ' + ${user.familyName}"
+                    style="font-weight: bold; color: #000000; margin-bottom: 0; padding-bottom: 0">
+                    Test User
+                </h5>
+
+                <span th:text="${user.userName}"
+                      style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 10%;">
+                                test@xyz.com
+                        </span>
+            </div>
+
+            <div class="nav flex-column align-items-start">
+                <a th:class="text-nowrap" href="#" th:href="@{/dashboard/investment-accounts}"
+                   style="text-decoration: none; color: cornflowerblue; margin-top: 50px;">
+                    <span class="fa fa-bank"></span>
+                    <span>Investment Accounts</span>
+                </a>
+
+                <a th:class="text-nowrap" href="#" th:href="@{/dashboard/rebalancing-templates}"
+                   style="text-decoration: none; color: cornflowerblue; margin-top: 25px;">
+                    <span class="fa fa-file-text"></span>
+                    <span>Rebalancing Templates</span>
+                </a>
+
+                <a th:class="text-nowrap" href="#" th:href="@{/dashboard/rebalancing-tools}"
+                   style="text-decoration: none; color: cornflowerblue; margin-top: 25px;">
+                    <span class="fa fa-balance-scale"></span>
+                    <span>Rebalancing Tools</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

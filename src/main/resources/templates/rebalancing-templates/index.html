@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Rebalancing Templates')}">
+</head>
+
+<body>
+<!--/*@thymesVar id="rebalancing_templates" type="java.util.List"*/-->
+<!--/*@thymesVar id="rebalancing_template" type="com.example.investmentportfoliorebalancingtool.domain.RebalanceConfigTemplate"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3" th:if="${!#lists.isEmpty(rebalancing_templates)}">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Rebalancing Templates</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Template Name</th>
+                                <th>Template Type</th>
+                                <th colspan="3"></th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>Default Template</td>
+                                <td>Equity Sector</td>
+                                <td><a href="#">View</a></td>
+                                <td><a href="#">Update</a></td>
+                                <td><a href="#">Delete</a></td>
+
+                            </tr>
+                            <tr th:each="rebalancing_template : ${rebalancing_templates}">
+                                <td th:text="${rebalancing_template.name}">Default Template</td>
+                                <td th:text="${rebalancing_template.type.label}">Equity Sector</td>
+                                <td><a href="#" th:href="@{'/dashboard/rebalancing-templates/' + ${rebalancing_template.name}}">View</a></td>
+                                <td><a href="#" th:href="@{'/dashboard/rebalancing-templates/' + ${rebalancing_template.name}}">Update</a></td>
+                                <td><a href="#" th:href="@{'/dashboard/rebalancing-templates/' + ${rebalancing_template.name} + '/delete'}">Delete</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Add New Template</h6>
+                </div>
+                <div class="card-body">
+                    <p style="font-weight: bold; margin-bottom: 0; padding-bottom: 0">
+                        Select a Rebalancing Template Type
+                    </p>
+                    <p style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 1%;">
+                        (Max Number of Templates allowed: 10)
+                    </p>
+                    <form method="get" th:action="@{/dashboard/rebalancing-templates/new}">
+                        <div class="input-group">
+                            <select class="form-select" name='template_type' id="inputGroupSelect04" aria-label="Select"
+                                    th:disabled="${is_disabled}">
+                                <option selected value="Asset Class">Asset Class</option>
+                                <option value="Country">Country</option>
+                                <option value="Equity Sector">Equity Sector</option>
+                            </select>
+                            <button th:disabled="${is_disabled}" class="btn btn-dark" type="submit" id="inputGroupSelectAddon04">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

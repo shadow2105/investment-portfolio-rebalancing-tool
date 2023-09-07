@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Investment Accounts')}">
+</head>
+
+<body>
+<!--/*@thymesVar id="investment_accounts" type="java.util.List"*/-->
+<!--/*@thymesVar id="investment_account" type="com.example.investmentportfoliorebalancingtool.domain.InvestmentAccount"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3" th:if="${!#lists.isEmpty(investment_accounts)}">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Investment Accounts</h6>
+                </div>
+                <div class="card-body">
+                    <!-- add model attribute "investment_accounts" -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Account Number</th>
+                                <th>Account Holder</th>
+                                <th colspan="3"></th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>AC123456</td>
+                                <td>Ashwin Rajput</td>
+                                <td><a href="#">View</a></td>
+                                <td><a href="#">Update</a></td>
+                                <td><a href="#">Delete</a></td>
+
+                            </tr>
+                            <tr th:each="investment_account : ${investment_accounts}">
+                                <td th:text="${investment_account.accountNumber}">AC123456</td>
+                                <td th:text="${investment_account.accountHolderFirstName} + ' ' +
+                                             ${investment_account.accountHolderLastName}">Ashwin Rajput</td>
+                                <td><a href="#" th:href="@{'/dashboard/investment-accounts/' + ${investment_account.id}}">View</a></td>
+                                <td><a href="#" th:href="@{'/dashboard/investment-accounts/' + ${investment_account.id}}">Update</a></td>
+                                <td><a href="#" th:href="@{'/dashboard/investment-accounts/' + ${investment_account.id} + '/delete'}">Delete</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Add New Account</h6>
+                </div>
+                <div class="card-body">
+                    <p style="font-weight: bold; margin-bottom: 0; padding-bottom: 0">
+                        Upload your Investment Account Statement
+                    </p>
+                    <p style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 1%;">
+                        (Allowed File Type: .pdf , Max Size: 2MB)
+                    </p>
+                    <form method="post" th:action="@{/dashboard/investment-accounts}" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <input type="file" name="file" class="form-control" id="inputGroupFile04"
+                                   aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                            <button class="btn btn-dark" type="submit" id="inputGroupFileAddon04">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

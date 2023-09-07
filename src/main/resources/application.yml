@@ -1,0 +1,105 @@
+---
+spring:
+  profiles:
+    active:
+      - dev
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+      max-request-size: 11MB
+      location: ${java.io.tmpdir}
+
+server:
+  servlet:
+    session:
+      timeout: 5m
+
+okta:
+  oauth2:
+    issuer: ${OKTA_OAUTH2_ISSUER}
+    client-id: ${OKTA_OAUTH2_CLIENT_ID}
+    client-secret: ${OKTA_OAUTH2_CLIENT_SECRET}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  datasource:
+    url: 'jdbc:h2:mem:iprtdb'
+
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+#    properties:
+#      hibernate:
+#       enable_lazy_load_no_trans: true           # anti-pattern
+
+  sql:
+    init:
+      platform: h2
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  h2:
+    console:
+      enabled: false
+
+  datasource:
+    url: 'jdbc:mysql://localhost:3306/iprt_dev'
+    username: 'iprt_dev_user'
+    password: 'shd_dev66'                            # will secure later
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQLDialect
+    database: mysql
+    show-sql: true
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: iprtdb_create.sql
+
+  sql:
+    init:
+      platform: mysql
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  h2:
+    console:
+      enabled: false
+
+  datasource:
+    url: 'jdbc:mysql://localhost:3306/iprt_prod'
+    username: 'iprt_prod_user'
+    password: 'shd_prod99'                            # will secure later
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQLDialect
+    database: mysql
+    show-sql: false
+
+  sql:
+    init:
+      platform: mysql
+

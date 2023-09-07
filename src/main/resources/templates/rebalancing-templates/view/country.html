@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Country Template: ' + ${rebalancing_template.name})}">
+</head>
+
+<body>
+<!--/*@thymesVar id="rebalancing_template type="com.example.investmentportfoliorebalancingtool.domain.RebalanceConfigTemplateCountry"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid" style="margin-top: 70px">
+    <div class="row">
+        <div class="col min-vh-100 p-4">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Template Details - Country</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td colspan="2" th:text="'Template: ' + ${rebalancing_template.name}"
+                                    style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 1%;">
+                                    Default Template
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Country</th>
+                                <th>Percent Allocation (%)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>Canada</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentCA, 1, 2)}">0</td>
+                            </tr>
+                            <tr>
+                                <td>United States of America</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentUS, 1, 2)}">0</td>
+                            </tr>
+                            <tr style="font-weight: bold; font-style: italic; height: 50px; vertical-align: bottom;">
+                                <td>Unknown</td>
+                                <td th:text="${#numbers.formatDecimal(rebalancing_template.percentUnknown, 1, 2)}">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

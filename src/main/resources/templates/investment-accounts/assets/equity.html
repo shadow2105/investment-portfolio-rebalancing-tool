@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Account: ' + ${investment_account.accountNumber} + ' Equity')}">
+</head>
+
+<body>
+<!--/*@thymesVar id="investment_account" type="com.example.investmentportfoliorebalancingtool.domain.InvestmentAccount"*/-->
+<!--/*@thymesVar id="account_equity_assets" type="java.util.List"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid" style="margin-top: 70px">
+    <div class="row">
+        <div class="col min-vh-100 p-4">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Equity Assets</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td colspan="7" th:text="'Account: ' + ${investment_account.accountNumber}"
+                                style="font-size: 0.9em; color: #808080; font-style: italic; margin-bottom: 1%;">
+                                AC123456
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Number Of Units</th>
+                                <th>Value Per Unit ($)</th>
+                                <th>Total Value ($)</th>
+                                <th>Country</th>
+                                <th>Sector</th>
+                                <th>Industry</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>XEQT.TO</td>
+                                <td>0</td>
+                                <td>>0</td>
+                                <td>0</td>
+                                <td>CA</td>
+                                <td>Unknown</td>
+                                <td>Not Available</td>
+                            </tr>
+                            <tr th:each="asset : ${account_equity_assets}">
+                                <td th:text="${asset.name}">XEQT.TO</td>
+                                <td th:text="${asset.numOfUnits}">0</td>
+                                <td th:text="${asset.valuePerUnit}">0</td>
+                                <td th:text="${#numbers.formatDecimal(asset.numOfUnits * asset.valuePerUnit, 1, 2)}">0</td>
+                                <td th:text="${asset.country}">CA</td>
+                                <td th:text="${asset.sector.label}">Unknown</td>
+                                <td th:text="${asset.industry}">Not Available</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('New Asset Class Template')}">
+</head>
+
+<body>
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">New Template Configuration - Asset Class</h6>
+
+                </div>
+                <div class="card-body">
+                    <form method="post" th:object="${rebalancing_template}"
+                          th:action="@{/dashboard/rebalancing-templates}">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <input type="hidden" name='template_type' value="Asset Class">
+                                        <label for="inputTemplateName" class="col-form-label">
+                                            Template Name
+                                            <span style="font-size: 0.9em; color: #808080; font-style: italic;
+                                                font-weight: normal">
+                                                (Must be 1-50 characters long).
+                                            </span>
+                                        </label>
+                                        <input type="text" id="inputTemplateName" class="form-control"
+                                               aria-describedby="templateNameHelpInLine" minlength="1"
+                                               maxlength="50" placeholder="template name here..." th:name="name"
+                                               autocomplete="off" required>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 0.9em; color: #808080;
+                                        font-style: italic; padding-top: 40px;">
+                                        All values in %. Must be a valid decimal number between 0.00 and 100.00.
+                                    </td>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:remove="all">
+                                    <td>
+                                        <label for="inputPercent" class="col-form-label">Asset Class</label>
+                                        <input type="text" id="inputPercent" class="form-control"
+                                               value="0.00">
+                                    </td>
+                                </tr>
+                                <tr th:each="asset_class : ${T(com.example.investmentportfoliorebalancingtool.domain.AssetClass).values()}">
+                                    <td th:if="${asset_class.label != 'Unknown'}">
+                                        <label th:for="inputPercent+${asset_class.label.replaceAll(' ', '')}"
+                                               th:text="${asset_class.label}" style="font-weight: bold; margin-bottom: 10px;">
+                                            Cash
+                                        </label>
+                                        <input type="number" th:id="inputPercent+${asset_class.label.replaceAll(' ', '')}"
+                                               class="form-control" value="0.00" min="0.00" max="100.00" step=".01"
+                                               th:name="percent+${asset_class.label.replaceAll(' ', '')}">
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-dark" type="submit" id="submitAssetClassTemplate">
+                                            Submit
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

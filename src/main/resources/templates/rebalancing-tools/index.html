@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Rebalancing Tools')}">
+</head>
+
+<body>
+<!--/*@thymesVar id="investment_accounts" type="java.util.List"*/-->
+<!--/*@thymesVar id="rebalancing_templates_asset_class" type="java.util.List"*/-->
+<!--/*@thymesVar id="rebalancing_templates_country" type="java.util.List"*/-->
+<!--/*@thymesVar id="rebalancing_templates_sector" type="java.util.List"*/-->
+
+<!--/*@thymesVar id="investment_account" type="com.example.investmentportfoliorebalancingtool.domain.InvestmentAccount"*/-->
+<!--/*@thymesVar id="rebalancing_template" type="com.example.investmentportfoliorebalancingtool.domain.RebalanceConfigTemplate"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Rebalance By Asset Class</h6>
+                </div>
+                <div class="card-body">
+                    <form method="get" target="_blank" th:action="@{/dashboard/rebalancing-tools/asset-class}">
+                        <div class="row">
+                            <div class="col">
+                                <label for="inputGroupSelectAccount01" style="font-weight: bold;">
+                                    Select an Investment Account
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                     margin-bottom: 1%;">
+                                        (Account Number)
+                                    </p>
+                                </label>
+
+                                <select class="form-select" name='account_number' id="inputGroupSelectAccount01" aria-label="Select">
+                                    <option th:each="investment_account: ${investment_accounts}"
+                                            th:value="${investment_account.accountNumber}" th:text="${investment_account.accountNumber}">
+                                        AC123456
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="inputGroupSelectTemplate01" style="font-weight: bold;">
+                                    Select an Asset Class Rebalancing Template
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                     margin-bottom: 1%;">
+                                        (Template Name)
+                                    </p>
+                                </label>
+                                <select class="form-select" name='template_name' id="inputGroupSelectTemplate01" aria-label="Select">
+                                    <option th:each="rebalancing_template: ${rebalancing_templates_asset_class}"
+                                            th:value="${rebalancing_template.name}" th:text="${rebalancing_template.name}">
+                                        Default Template
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-dark mt-5" type="submit" id="inputGroupButtonRebalance01"
+                        th:disabled="${#lists.isEmpty(investment_accounts) || #lists.isEmpty(rebalancing_templates_asset_class)} ? true : false">
+                            Rebalance
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Rebalance By Country</h6>
+                </div>
+                <div class="card-body">
+                    <form method="get" target="_blank" th:action="@{/dashboard/rebalancing-tools/country}">
+                        <div class="row">
+                            <div class="col">
+                                <label for="inputGroupSelectAccount02" style="font-weight: bold;">
+                                    Select an Investment Account
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                     margin-bottom: 1%;">
+                                        (Account Number)
+                                    </p>
+                                </label>
+
+                                <select class="form-select" name='account_number' id="inputGroupSelectAccount02" aria-label="Select">
+                                    <option th:each="investment_account: ${investment_accounts}"
+                                            th:value="${investment_account.accountNumber}" th:text="${investment_account.accountNumber}">
+                                        AC123456
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="inputGroupSelectTemplate02" style="font-weight: bold;">
+                                    Select a Country Rebalancing Template
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                    margin-bottom: 1%;">
+                                        (Template Name)
+                                    </p>
+                                </label>
+                                <select class="form-select" name='template_name' id="inputGroupSelectTemplate02" aria-label="Select">
+                                    <option th:each="rebalancing_template: ${rebalancing_templates_country}"
+                                            th:value="${rebalancing_template.name}" th:text="${rebalancing_template.name}">
+                                        Default Template
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-dark mt-5" type="submit" id="inputGroupButtonRebalance02"
+                                th:disabled="${#lists.isEmpty(investment_accounts) || #lists.isEmpty(rebalancing_templates_country)} ? true : false">
+                            Rebalance
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Rebalance By Equity Sector</h6>
+                </div>
+                <div class="card-body">
+                    <form method="get" target="_blank" th:action="@{/dashboard/rebalancing-tools/equity-sector}">
+                        <div class="row">
+                            <div class="col">
+                                <label for="inputGroupSelectAccount03" style="font-weight: bold;">
+                                    Select an Investment Account
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                    margin-bottom: 1%;">
+                                        (Account Number)
+                                    </p>
+                                </label>
+
+                                <select class="form-select" name='account_number' id="inputGroupSelectAccount03" aria-label="Select">
+                                    <option th:each="investment_account: ${investment_accounts}"
+                                            th:value="${investment_account.accountNumber}" th:text="${investment_account.accountNumber}">
+                                        AC123456
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="inputGroupSelectTemplate03" style="font-weight: bold;">
+                                    Select an Equity Sector Rebalancing Template
+                                    <p style="font-size: 0.9em; color: #808080; font-style: italic; font-weight: normal;
+                                    margin-bottom: 1%;">
+                                        (Template Name)
+                                    </p>
+                                </label>
+                                <select class="form-select" name='template_name' id="inputGroupSelectTemplate03" aria-label="Select">
+                                    <option th:each="rebalancing_template: ${rebalancing_templates_sector}"
+                                            th:value="${rebalancing_template.name}" th:text="${rebalancing_template.name}">
+                                        Default Template
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-dark mt-5" type="submit" id="inputGroupButtonRebalance03"
+                                th:disabled="${#lists.isEmpty(investment_accounts) || #lists.isEmpty(rebalancing_templates_sector)} ? true : false">
+                            Rebalance
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

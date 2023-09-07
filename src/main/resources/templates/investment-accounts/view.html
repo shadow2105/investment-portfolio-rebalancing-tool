@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments/head :: header ('Account: ' + ${investment_account.accountNumber})}">
+</head>
+
+<body>
+<!--/*@thymesVar id="investment_account" type="com.example.investmentportfoliorebalancingtool.domain.InvestmentAccount"*/-->
+<!--/*@thymesVar id="account_assets_class_allocation_map" type="java.util.Map"*/-->
+
+<header class="border-bottom shadow">
+    <nav th:replace="~{fragments/navigation :: navLayout ('dashboard')}"></nav>
+</header>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col min-vh-100 p-4" style="margin-top: 70px">
+            <div th:replace="~{fragments/sidebar_button :: sidebar-button}"></div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Account Details</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tr>
+                                <td class="fw-bold">Account Number:</td>
+                                <td th:text="${investment_account.accountNumber}">AC123456</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Account Holder:</td>
+                                <td th:text="${investment_account.accountHolderFirstName} + ' ' +
+                                         ${investment_account.accountHolderLastName}">Ashwin Rajput</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Account Value:</td>
+                                <td th:text="'$' + ${investment_account.accountValue}" style="font-style: italic">
+                                    $0.00
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-primary border-3 border-dark mb-3">
+
+                <div class="card-header bg-secondary text-light m-3">
+                    <h6 class="card-title">Account Assets</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Asset Class</th>
+                                <th>Percent Allocation (%)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>Equity</td>
+                                <td>0</td>
+                                <td><a href="#">View</a></td>
+
+                            </tr>
+                            <tr th:each="asset_class : ${account_assets_class_allocation_map}">
+                                <td th:text="${asset_class.key.label}">Equity</td>
+                                <td th:text="${asset_class.value}">0</td>
+                                <td><a href="#" th:href="@{'/dashboard/investment-accounts/' +
+                                ${investment_account.id} + '/assets/'
+                                 + ${asset_class.key.label.replaceAll(' ', '-').toLowerCase()}}">
+                                    View</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
