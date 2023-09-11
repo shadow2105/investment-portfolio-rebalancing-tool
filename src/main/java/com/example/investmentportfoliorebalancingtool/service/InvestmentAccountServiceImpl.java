@@ -306,7 +306,7 @@ public class InvestmentAccountServiceImpl implements InvestmentAccountService {
      *
      * Getting calculated before the data (num_of_units, value_per_unit) is being persisted to the database
      * num_of_units had a scale of 2 in database column (now changed to 4; see class 'Asset')
-     * value_per_unit has a scale of 2 in the database column
+     * value_per_unit has a scale of 3 in the database column
      */
     @Override
     public BigDecimal calculateTotalAccountValue(InvestmentAccount investmentAccount) {
@@ -326,7 +326,7 @@ public class InvestmentAccountServiceImpl implements InvestmentAccountService {
      *
      * Getting calculated after the data (num_of_units, value_per_unit) is persisted to the database
      * num_of_units had a scale of 2 in the investment account statement (pdf)
-     * value_per_unit has a scale of 2 in the data being fetched from (UniBit API)
+     * value_per_unit has a scale of 3 in the data being fetched from (UniBit API)
      */
     @Override
     public BigDecimal calculateAccountEquityValue(InvestmentAccount investmentAccount) {

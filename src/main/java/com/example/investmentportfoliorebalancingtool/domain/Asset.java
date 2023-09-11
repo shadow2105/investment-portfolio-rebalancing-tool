@@ -23,7 +23,7 @@ public class Asset {
     @Column(name = "number_of_units", nullable = false, precision = 20, scale = 4)
     private BigDecimal numOfUnits;
 
-    @Column(name = "value_per_unit", nullable = false, precision = 20, scale = 2)
+    @Column(name = "value_per_unit", nullable = false, precision = 20, scale = 3)
     private BigDecimal valuePerUnit;
 
     @Column(name = "country")
