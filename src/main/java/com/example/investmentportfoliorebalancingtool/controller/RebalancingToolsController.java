@@ -165,7 +165,7 @@ public class RebalancingToolsController {
     }
 
     @GetMapping({"/dashboard/rebalancing-tools"})
-    public String getAllInvestmentAccounts(Model model) {
+    public String getAllRebalancingTools(Model model) {
         Optional<User> userOptional = userService.getAuthenticatedUser();
         if(userOptional.isPresent()) {
             User authenticatedUser = userOptional.get();
