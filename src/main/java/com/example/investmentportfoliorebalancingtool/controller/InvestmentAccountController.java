@@ -47,7 +47,13 @@ public class InvestmentAccountController {
                 byte[] bytes = file.getBytes();
 
                 // Directory path where you want to save ;
-                Path tempPath = Paths.get(System.getProperty("java.io.tmpdir") + filename);
+                /* System.getProperty("java.io.tmpdir") output in -
+                 * Windows - C:\Users\{user}\AppData\Local\Temp\
+                 * Linux - /tmp
+                 */
+                Path tempPath = Paths.get(System.getProperty("java.io.tmpdir") +
+                        (System.getProperty("os.name").equals("Linux") ? "/" : "") + filename);
+
                 Files.write(tempPath, bytes);
 
                 Optional<InvestmentAccount> investmentAccountOptional = investmentAccountService.

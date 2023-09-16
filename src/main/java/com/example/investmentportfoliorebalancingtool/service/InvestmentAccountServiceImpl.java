@@ -345,10 +345,12 @@ public class InvestmentAccountServiceImpl implements InvestmentAccountService {
 
     private Map<String, Object> getAccountData(String filePath) throws IOException {
         // Build the Command Line String
-        String commandStr = "python \"" +
+        String commandStr = "python3 \"" +
                 new File("src/main/resources/scripts/fetch_account_data.py").getAbsolutePath() +
                 "\" --filepath " +
                 filePath;
+        // System.out.println(commandStr);
+        // Can execute a bash script to handle exception and install PyPDF2 if not found
 
         // Create a CommandLine object from parsing the Command Line String
         CommandLine cmdLine = CommandLine.parse(commandStr);
