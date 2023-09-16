@@ -2,7 +2,7 @@
 spring:
   profiles:
     active:
-      - dev
+      - prod
 
   servlet:
     multipart:
@@ -16,11 +16,20 @@ server:
     session:
       timeout: 5m
 
+  port: ${SERVER_PORT}
+
 okta:
   oauth2:
     issuer: ${OKTA_OAUTH2_ISSUER}
     client-id: ${OKTA_OAUTH2_CLIENT_ID}
     client-secret: ${OKTA_OAUTH2_CLIENT_SECRET}
+
+logging:
+  file:
+    path: ${LOGGING_FILE_PATH}
+
+com:
+  post-logout-redirect-uri: ${COM_POST_LOGOUT_REDIRECT_URI}
 
 ---
 spring:
@@ -88,18 +97,18 @@ spring:
       enabled: false
 
   datasource:
-    url: 'jdbc:mysql://localhost:3306/iprt_prod'
-    username: 'iprt_prod_user'
-    password: 'shd_prod99'                            # will secure later
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: validate
-    database-platform: org.hibernate.dialect.MySQLDialect
-    database: mysql
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM}
+    database: ${SPRING_JPA_DATABASE}
     show-sql: false
 
   sql:
     init:
-      platform: mysql
+      platform: ${SPRING_JPA_DATABASE}
 
