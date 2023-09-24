@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,5 +69,22 @@ public class UserServiceImpl implements UserService {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public Set<User> getRegisteredUsers() {
+        // log
+        Set<User> registeredUsers = Collections.synchronizedSet(new LinkedHashSet<>());
+        userRepository.findAll().iterator().forEachRemaining(registeredUsers::add);
+        return registeredUsers;
+    }
+
+    @Override
+    @Transactional
+    public void removeRegisteredUserById(String id) {
+        Optional<User> userOptional = userRepository.findById(UUID.fromString(id));
+
+        userOptional.ifPresent(userRepository::remove);
     }
 }

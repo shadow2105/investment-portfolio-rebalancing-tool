@@ -79,7 +79,7 @@
 
             </ul>
 
-            <ul th:if="${menu == 'dashboard'}" class="navbar-nav d-flex ms-auto mb-2 mb-lg-0">
+            <ul th:if="${menu == 'dashboard' || menu == 'admin-dashboard'}" class="navbar-nav d-flex ms-auto mb-2 mb-lg-0">
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,7 +150,7 @@
                 </li>
             </ul>
 
-            <div th:if="${menu != 'dashboard'}" class="d-flex ms-auto order-5">
+            <div th:if="${menu != 'dashboard' && menu != 'admin-dashboard'}" class="d-flex ms-auto order-5">
                 <a sec:authorize="!isAuthenticated()" class="btn btn-secondary" href="#" th:href="@{'/oauth2/authorization/okta'}" role="button">Log in</a>
 
                 <a sec:authorize="isAuthenticated()" class="btn btn-secondary" href="#" th:href="@{'/logout'}" role="button">Log out</a>

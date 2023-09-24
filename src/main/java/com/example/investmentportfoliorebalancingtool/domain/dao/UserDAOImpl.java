@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Set<User> readAll() {
-        return entityManager.createQuery("SELECT u FROM User u", User.class)
+        return entityManager.createQuery("SELECT u FROM User u ORDER BY u.createdAt", User.class)
                 .getResultStream().collect(Collectors.toSet());
     }
 
