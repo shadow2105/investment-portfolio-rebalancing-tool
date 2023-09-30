@@ -5,13 +5,16 @@
     <title>Sidebar Button</title>
 </head>
 <body>
-    <div th:fragment="sidebar-button" style="position: sticky; top: 80px; background-color: white; padding: 7px; z-index: 1">
+    <div th:fragment="sidebar-button" style="position: sticky; top: 75px; background-color: white;
+     padding: 7px; margin-bottom: 0.5em; z-index: 1">
         <button class="btn btn-dark float-end ms-3" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasSupportedContent" aria-controls="offcanvas">
             <span class="fa fa-angle-double-right" style="font-size:24px"></span>
             <span></span>
         </button>
-        <h4 style="margin-bottom: 20px">DASHBOARD</h4>
+        <a href="#" th:href="@{'/dashboard'}" style="margin-bottom: 20px; text-decoration: none; color: cornflowerblue">
+            <h4>DASHBOARD</h4>
+        </a>
     </div>
 </body>
 </html>
