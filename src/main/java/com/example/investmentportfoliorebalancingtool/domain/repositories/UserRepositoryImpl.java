@@ -31,11 +31,19 @@ public class UserRepositoryImpl implements UserRepository {
                 userDAO.create(user);
             }
             else {
-                if(user.getAdminProfile() == null && user.getRole().equals(UserRole.ADMIN)) {
-                    AdminProfile adminProfile = new AdminProfile(user);
+                AdminProfile adminProfile = user.getAdminProfile();
+
+                // When the user role is changed from User to Admin
+                if(adminProfile == null && user.getRole().equals(UserRole.ADMIN)) {
+                    adminProfile = new AdminProfile(user);
                     user.setAdminProfile(adminProfile);
                 }
-                 return userDAO.update(user);
+                // When the user role is changed from Admin to User
+                else if(adminProfile != null && !user.getRole().equals(UserRole.ADMIN)) {
+                    adminProfile.setUser(null);
+                    user.setAdminProfile(null);
+                }
+                return userDAO.update(user);
             }
         }
         return user;

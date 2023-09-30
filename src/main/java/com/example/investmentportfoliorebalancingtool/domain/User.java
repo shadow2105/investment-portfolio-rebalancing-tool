@@ -37,7 +37,7 @@ public class User extends BaseEntityAudit implements Persistable<UUID> {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private UserProfile userProfile;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private AdminProfile adminProfile;
 
     @Transient

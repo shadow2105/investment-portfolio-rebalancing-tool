@@ -56,9 +56,15 @@ public class UserServiceImpl implements UserService {
         if(principal != null) {
             Optional<User> userOptional = userRepository.findByUserName(principal.getUserName());
 
+            /* Except UserName and email, all user fields can be updated using Okta
+             * To reflect the changes in local database without deleting the updated user's entry
+             * set the user's attributes as that of principal. If there are any changes, Hibernate will
+             * automatically generate update statements.
+             */
             User user;
             if(userOptional.isPresent()) {
                 user = userOptional.get();
+                user.setRole(principal.getRole());  // Check if user role is updated
                 user.setUpdatedBy(principal.getUserName());
             }
             else {
