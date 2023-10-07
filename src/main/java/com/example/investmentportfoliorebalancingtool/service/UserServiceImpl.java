@@ -1,12 +1,7 @@
 package com.example.investmentportfoliorebalancingtool.service;
 
 import com.example.investmentportfoliorebalancingtool.domain.User;
-import com.example.investmentportfoliorebalancingtool.domain.UserRole;
 import com.example.investmentportfoliorebalancingtool.domain.repositories.UserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,43 +11,17 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthService authService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthService authService) {
         this.userRepository = userRepository;
-    }
-
-    private User getPrincipal() {
-        try {
-            SecurityContext context = SecurityContextHolder.getContext();
-            Authentication authentication = context.getAuthentication();
-            OidcUser principalUser = (OidcUser) authentication.getPrincipal();
-
-            UserRole role = UserRole.USER;
-            if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"))) {
-                role = UserRole.ADMIN;
-            }
-
-            return new User(principalUser.getGivenName(),
-                    principalUser.getMiddleName(),
-                    principalUser.getFamilyName(),
-                    principalUser.getPreferredUsername(),
-                    principalUser.getEmail(),
-                    principalUser.getPicture(),
-                    principalUser.getLocale(),
-                    role);
-        }
-        catch (Exception e) {
-            System.out.println("Unable to fetch Authenticated User details!");
-            e.printStackTrace();
-        }
-
-        return null;
+        this.authService = authService;
     }
 
     @Override
     @Transactional
     public Optional<User> getAuthenticatedUser() {
-        User principal = getPrincipal();
+        User principal = authService.getPrincipal();
         if(principal != null) {
             Optional<User> userOptional = userRepository.findByUserName(principal.getUserName());
 
@@ -88,8 +57,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void removeRegisteredUserById(String id) {
-        Optional<User> userOptional = userRepository.findById(UUID.fromString(id));
+    public void removeRegisteredUserById(UUID id) {
+        Optional<User> userOptional = userRepository.findById(id);
 
         userOptional.ifPresent(userRepository::remove);
     }

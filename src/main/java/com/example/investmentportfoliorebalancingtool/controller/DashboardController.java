@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class DashboardController {
@@ -71,7 +72,7 @@ public class DashboardController {
 
             //Case 1: User deactivated from Okta, but exists in local DB (above described job will handle this)
             //Case 2: User deleted from local DB will lead to instant deactivation on Okta (using Okta API)
-            userService.removeRegisteredUserById(id);
+            userService.removeRegisteredUserById(UUID.fromString(id));
         }
         else {
             throw new RuntimeException("Unable to fetch User Investment Accounts!");
