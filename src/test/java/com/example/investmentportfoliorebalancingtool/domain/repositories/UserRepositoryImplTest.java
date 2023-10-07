@@ -213,9 +213,10 @@ class UserRepositoryImplTest {
 
     @Test
     void remove() {
+        // Assuming user is not null
         userRepository.remove(user);
 
         // Expecting a single invocation of userDao.delete(User user) method
-        verify(userDAO, times(1)).delete(any());
+        verify(userDAO, times(1)).delete(any(User.class));
     }
 }

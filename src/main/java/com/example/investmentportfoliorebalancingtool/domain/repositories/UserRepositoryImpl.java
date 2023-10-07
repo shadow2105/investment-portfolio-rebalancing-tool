@@ -66,6 +66,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void remove(User user) {
-        userDAO.delete(user);
+        if (user != null) {
+            userDAO.delete(user);
+        }
     }
 }
